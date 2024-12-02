@@ -69,12 +69,16 @@ func isListSafeWithDampener(list []int) bool {
     return false
 }
 
-func isSafe (differences []int) bool {
-	if((differences[0] < 0 && differences[len(differences)-1] < 0 && differences[0] >= -3 && differences[len(differences)-1] >= -3) || (differences[0] > 0 && differences[len(differences)-1] > 0 && differences[0] <= 3 && differences[len(differences)-1] <= 3)) {
-		return  true
-	}
+func isSafe(differences []int) bool {
+    first := differences[0]
+    last := differences[len(differences)-1]
 
-	return false
+    if (first < 0 && last < 0 && first >= -3 && last >= -3) || 
+       (first > 0 && last > 0 && first <= 3 && last <= 3) {
+        return true
+    }
+
+    return false
 }
 
 func diffs (list []int) []int {
