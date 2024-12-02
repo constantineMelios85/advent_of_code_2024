@@ -90,22 +90,3 @@ func sortList (list []int) []int {
 	sort.Ints(list)
 	return list
 }
-
-func findBadLevel(list []int) *int {
-var trend = sumSlice(list)
-
-    for key, value := range list {
-        if value > 3 || value < -3 || value == 0 || (trend > 0 && value < 0) || (trend < 0 && value > 0) {
-            return &key
-        }
-    }
-    return nil
-}
-
-func sumSlice(numbers []int) int {
-	sum := 0
-	for _, num := range numbers {
-		sum += num
-	}
-	return sum
-}
