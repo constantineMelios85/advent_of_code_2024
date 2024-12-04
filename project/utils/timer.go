@@ -20,12 +20,9 @@ func MeasureExecutionTime(fn func(), iterations int, message string) {
 	for i := 0; i < iterations; i++ {
 		fn() 
 	}
-	totalTime := time.Since(startTime).Nanoseconds() 
-
-	
-	averageTime := totalTime / int64(iterations)
-	formattedTime := FormatWithThousandSeparators(averageTime)
-
+	totalTime := time.Since(startTime)
+	averageTime := totalTime / time.Duration(iterations)
+	formattedTime := FormatWithThousandSeparators(averageTime.Nanoseconds())
 
 	fmt.Printf("%s - Average time taken for %d iterations: %s ns\n", message, iterations, formattedTime)
 }
@@ -38,7 +35,7 @@ func FormatWithThousandSeparators(n int64) string {
 	
 	for i, ch := range numStr {
 		if i > 0 && (numLen-i)%3 == 0 {
-			result.WriteString(" ") 
+			result.WriteString(".") 
 		}
 		result.WriteRune(ch)
 	}
