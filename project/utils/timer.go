@@ -9,7 +9,7 @@ import (
 
 func MeasureExecutionTime(fn func(), iterations int, message string) {
 	if iterations <= 0 {
-		iterations = 1000 
+		iterations = 10000 
 	}
 	if message == "" {
 		message = "Execution" 
