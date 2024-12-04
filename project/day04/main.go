@@ -30,7 +30,16 @@ func main() {
 
 	crossedOccurrences := countDiagonalOccurrences(matrix, "MAS")
 	fmt.Println(crossedOccurrences)
+
+	utils.MeasureExecutionTime(func() {
+		countWordOccurrences(matrix, directions, "XMAS")
+	}, 10000, "First Solution")
+	utils.MeasureExecutionTime(func() {
+		countDiagonalOccurrences(matrix, "MAS")
+	},
+	 10000, "Second Solution")
 }
+
 
 func createMatrix(lines []string) [][]rune {
 	matrix := make([][]rune, len(lines))

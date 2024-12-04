@@ -30,6 +30,17 @@ func main() {
 	validMultiplications := filterValidMultiplications(instructions)
 	conditionalSum := sumMultiplicationList(validMultiplications)
 	fmt.Println(conditionalSum)
+
+	utils.MeasureExecutionTime(func() {
+		multiplications := findRegexMatches(input, `mul\(\d+,\d+\)`)
+	  sumMultiplicationList(multiplications)
+	}, 10000, "First Solution")
+
+	utils.MeasureExecutionTime(func() {
+		instructions := findRegexMatches(input, `mul\(\d+,\d+\)|do\(\)|don't\(\)`)
+		validMultiplications := filterValidMultiplications(instructions)
+		sumMultiplicationList(validMultiplications)
+	}, 10000, "Second Solution")
 }
 
 func sumMultiplicationList (multiplications []string) int {

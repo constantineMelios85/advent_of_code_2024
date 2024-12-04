@@ -32,6 +32,20 @@ func main() {
 	}
 	fmt.Println(safeListsWithDampener)
 
+	utils.MeasureExecutionTime(func() {
+		for _, line := range lines {
+		if isListSafe(parseLine(line)) {
+			safeLists++
+		}
+	}
+	}, 10000, "First Solution")
+	utils.MeasureExecutionTime(func() {
+		for _, line := range lines {
+		if isListSafeWithDampener(parseLine(line)) {
+			safeListsWithDampener++
+		}
+	}
+	}, 10000, "Second Solution")
 }
 
 func parseLine(line string) ([]int) {

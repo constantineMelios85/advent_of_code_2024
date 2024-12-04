@@ -29,6 +29,13 @@ func main() {
 	//Similarity
 	similarity := sumOccurrences(leftNumbers, rightNumbers)
 	fmt.Println(similarity)
+
+	utils.MeasureExecutionTime(func() {
+		calculateDifferenceSum(leftNumbers, rightNumbers)
+	}, 10000, "First Solution")
+	utils.MeasureExecutionTime(func() {
+		sumOccurrences(leftNumbers, rightNumbers)
+	}, 10000, "Second Solution")
 }
 
 
