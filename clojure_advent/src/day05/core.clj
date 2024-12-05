@@ -47,10 +47,7 @@
                 missing (filter #(and (not (contains? (set executed) %))
                                       (contains? (set remaining) %))
                                 required)]
-            (if (empty? missing) 
-              (let [next-item (first missing)
-                    new-remaining (cons next-item (remove #{next-item} remaining))]
-                (recur new-remaining executed)))))))))
+              (recur (cons (first missing) (remove #{(first missing)} remaining)) executed)))))))
 
 (defn process-valid-orders [rules-map orders]
   (let [valid-orders (filter #(can-execute-orders? rules-map %) orders)
