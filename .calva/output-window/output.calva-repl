@@ -1,0 +1,7 @@
+; Jacking in...
+; Connecting using "Babashka" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /Users/konstantinosmelios/advent of code; bb --nrepl-server 49918)
