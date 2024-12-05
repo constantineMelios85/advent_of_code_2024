@@ -47,8 +47,7 @@
                 missing (filter #(and (not (contains? (set executed) %))
                                       (contains? (set remaining) %))
                                 required)]
-            (if (empty? missing)
-              (throw (ex-info "Cannot rearrange orders to satisfy rules" {:order order-vec}))
+            (if (empty? missing) 
               (let [next-item (first missing)
                     new-remaining (cons next-item (remove #{next-item} remaining))]
                 (recur new-remaining executed)))))))))
