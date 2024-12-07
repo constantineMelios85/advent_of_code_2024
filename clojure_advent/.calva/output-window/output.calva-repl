@@ -36,29 +36,8 @@ You can configure this with the setting:
 ;   - See https://calva.io/connect-sequences/
 ; 
 
-; Starting Jack-in: (cd /Users/konstantinosmelios/advent of code/clojure_advent; lein update-in :dependencies conj '[nrepl,"1.1.1"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.47.1"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +uberjar repl :headless)
-; Jacking in...
-; Connecting using "Leiningen" project type.
-; You can make Calva auto-select this.
-;   - See https://calva.io/connect-sequences/
-; 
-
-; Starting Jack-in: (cd /Users/konstantinosmelios/advent of code/clojure_advent; lein update-in :dependencies conj '[nrepl,"1.1.1"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.47.1"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- repl :headless)
-; Jacking in...
-; Connecting using "Babashka" project type.
-; You can make Calva auto-select this.
-;   - See https://calva.io/connect-sequences/
-; 
-
-; Starting Jack-in: (cd /Users/konstantinosmelios/advent of code/clojure_advent; bb --nrepl-server 49924)
-; Jacking in...
-; Connecting using "Leiningen" project type.
-; You can make Calva auto-select this.
-;   - See https://calva.io/connect-sequences/
-; 
-
-; Starting Jack-in: (cd /Users/konstantinosmelios/advent of code/clojure_advent; lein update-in :dependencies conj '[nrepl,"1.1.1"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.47.1"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +uberjar repl :headless)
-; Using host:port 127.0.0.1:49935 ...
+; Starting Jack-in: pushd c:\Users\costa\repos\advent_of_code_2024\clojure_advent & cmd.exe /d /c lein update-in :dependencies conj [nrepl,"1.1.1"] -- update-in :plugins conj [cider/cider-nrepl,"0.47.1"] -- update-in [:repl-options,:nrepl-middleware] conj '["cider.nrepl/cider-middleware"]' -- repl :headless & popd
+; Using host:port 127.0.0.1:61345 ...
 ; Hooking up nREPL sessions ...
 ; Connected session: clj
 ; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
@@ -68,11 +47,32 @@ clj꞉clojure-advent.core꞉> 
 about why stdout printed to this file is prepended with `;` to be line comments."
 clj꞉clojure-advent.core꞉> 
 ; Jack-in done.
-clj꞉clojure-advent.core꞉> day04/-main
-
-; Syntax error compiling at (.calva/output-window/output.calva-repl:1:8522).
-; No such namespace: day04
-clj꞉clojure-advent.core꞉>(day04/-main)
-; Syntax error compiling at (.calva/output-window/output.calva-repl:75:26).
-; No such namespace: day04
+clj꞉clojure-advent.core꞉> (+ 2 4 6)
+12
+clj꞉clojure-advent.core꞉> (strt "Anastasis " "is " "foverakias!")
+; Syntax error compiling at (c:\Users\costa\repos\advent_of_code_2024\clojure_advent\.calva\output-window\output.calva-repl:52:27).
+; Unable to resolve symbol: strt in this context
+clj꞉clojure-advent.core꞉> (str "Anastasis " "is " "foverakias!")
+"Anastasis is foverakias!"
+clj꞉clojure-advent.core꞉> (float? 3)
+false
+clj꞉clojure-advent.core꞉> (float? 3.0)
+true
+clj꞉clojure-advent.core꞉> (* 3 4 2)
+24
+clj꞉clojure-advent.core꞉> (* 3 2 3)
+18
+clj꞉clojure-advent.core꞉> (*)
+1
+clj꞉clojure-advent.core꞉> (+)
+0
+clj꞉clojure-advent.core꞉> (/)
+; Execution error (ArityException) at clojure-advent.core/eval10573 (form-init13708968835561077742.clj:69).
+; Wrong number of args (0) passed to: clojure.core//
+clj꞉clojure-advent.core꞉> (/ 18 3)
+6
+clj꞉clojure-advent.core꞉> (+ 29 148 53)
+230
+clj꞉clojure-advent.core꞉> (+ 190 292 3267)
+3749
 clj꞉clojure-advent.core꞉> 

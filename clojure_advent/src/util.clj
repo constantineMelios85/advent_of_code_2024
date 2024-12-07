@@ -10,3 +10,6 @@
                                (f)
                                (- (System/nanoTime) start)))]
     (format-number (/ (reduce + times) (double n)))))
+
+(defn sum-of-list [lst]
+  (reduce + lst))

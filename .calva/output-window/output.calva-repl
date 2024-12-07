@@ -5,3 +5,16 @@
 ; 
 
 ; Starting Jack-in: (cd /Users/konstantinosmelios/advent of code; bb --nrepl-server 49918)
+; TypeError: Cannot read properties of undefined (reading 'label')
+; Aborting connect.
+; Connecting using "Generic" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Connecting ...
+; Reading port file: file:///c%3A/Users/costa/repos/advent_of_code_2024/.nrepl-port ...
+; No nrepl port file found.
+; Hooking up nREPL sessions ...
+; nREPL connection failed: AggregateError
+; Failed connecting.
