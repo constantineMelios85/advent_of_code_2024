@@ -4,6 +4,8 @@
             [clojure.math.combinatorics :as combo]
             [util :refer [sum-of-list]]))
 
+(def operations {:+ + :* * :- - :/ / :|| #(Long/parseLong (str %1 %2))})
+
 (defn generate-operator-combinations [n operators]
   (apply combo/cartesian-product (repeat n operators)))
 
@@ -17,12 +19,7 @@
 
 (defn evaluate-expression [numbers operators]
   (reduce (fn [acc [num op]]
-            (case op
-              "+" (+ acc num)
-              "*" (* acc num)
-              "-" (- acc num)
-              "/" (/ acc num)
-              "||" (Long/parseLong (str acc num))))
+            ((operations (keyword op)) acc num))
           (first numbers)
           (map vector (rest numbers) operators)))
 
