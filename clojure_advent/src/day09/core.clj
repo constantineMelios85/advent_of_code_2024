@@ -20,35 +20,54 @@
 
 (defn disk-map [seq]
   (let [initial-state {:disk-map [] :index 0 :id 0}
-        final-state (reduce process-memory-size initial-state seq)
-        joined-disk-map (vec (apply concat (:disk-map final-state)))]
-    joined-disk-map))
+        final-state (reduce process-memory-size initial-state seq)]
+    (:disk-map final-state)))
 
 (defn find-first-empty-space [disk-map]
   (.indexOf disk-map \.))
 
-(defn defrag-disk [disk-map]
-  (let [map-length (count disk-map)
-        clean-map (filter #(not= \. %) disk-map)
+(defn frag-disk [disk-map]
+  (let [flat-map (vec (apply concat disk-map))
+        map-length (count flat-map)
+        clean-map (filter #(not= \. %) flat-map)
         clean-map-length (count clean-map)
         empty-spaces (- map-length clean-map-length)
-        spaces-to-move  (vec (take empty-spaces (reverse clean-map)))
-        
+        spaces-to-move (vec (take empty-spaces (reverse clean-map)))
         initial-defrag (reduce (fn [acc space]
-                                 (let [dot-index (find-first-empty-space acc)]
-                                   (assoc acc dot-index space)))
-                               disk-map
-                               spaces-to-move) 
-        defragged (vec (take clean-map-length initial-defrag))]
-    defragged))
+                               (let [dot-index (find-first-empty-space acc)]
+                                 (assoc acc dot-index space)))
+                             flat-map
+                             spaces-to-move)
+        defragmented (vec (take clean-map-length initial-defrag))]
+    defragmented))
 
-(defn checksum [disk-map]
-  (reduce + (map-indexed (fn [idx itm] (* idx itm)) disk-map)))
+(defn checksum [flattened-disk-map]
+  (reduce + (map-indexed (fn [idx itm] (* idx itm)) flattened-disk-map)))
+
+(defn frag [coll]
+  (let [is-number-vec? #(every? number? %)
+        is-dot-vec? #(every? #{\.} %)
+        fill-dots #(vec (concat % (repeat (- (count %2) (count %)) \.)))]
+    (reverse
+     (reduce
+      (fn [acc item]
+        (if (is-number-vec? item)
+          (let [target-index (first (keep-indexed #(when (and (is-dot-vec? %2) 
+                                                              (>= (count %2) (count item))) 
+                                                     %1) 
+                                                  acc))]
+            (if target-index
+              (assoc acc target-index (fill-dots item (nth acc target-index)))
+              (conj acc item)))
+          (conj acc item)))
+      []
+      (reverse coll)))))
   
 
 (defn -main []
   (let [input (split-string-to-chars(first (fr/read-lines "src/day09/input.txt")))
         disk-map (disk-map input)
-        defragged-disk (defrag-disk disk-map)
-        checksum (checksum defragged-disk)]
-    (println checksum)))
+        fragmented-disk (frag-disk disk-map)
+        fragmented-checksum (checksum fragmented-disk)]
+    (println disk-map)
+    (println fragmented-checksum)))
