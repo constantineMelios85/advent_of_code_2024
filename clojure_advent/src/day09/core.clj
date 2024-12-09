@@ -21,7 +21,7 @@
 (defn disk-map [seq]
   (let [initial-state {:disk-map [] :index 0 :id 0}
         final-state (reduce process-memory-size initial-state seq)]
-    (:disk-map final-state)))
+    (filter seq (:disk-map final-state))))
 
 (defn find-first-empty-space [disk-map]
   (.indexOf disk-map \.))
@@ -44,11 +44,14 @@
 (defn checksum [flattened-disk-map]
   (reduce + (map-indexed (fn [idx itm] (* idx itm)) flattened-disk-map)))
   
+(defn defrag-disk [disk-map]
+  (println disk-map))
 
 (defn -main []
   (let [input (split-string-to-chars(first (fr/read-lines "src/day09/input.txt")))
         disk-map (disk-map input)
         fragmented-disk (frag-disk disk-map)
-        fragmented-checksum (checksum fragmented-disk)]
-    (println disk-map)
-    (println fragmented-checksum)))
+        fragmented-checksum (checksum fragmented-disk)
+        defragmented-disk (defrag-disk disk-map)] 
+    (println fragmented-checksum)
+    (println defragmented-disk)))
