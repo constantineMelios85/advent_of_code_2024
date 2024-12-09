@@ -43,25 +43,6 @@
 
 (defn checksum [flattened-disk-map]
   (reduce + (map-indexed (fn [idx itm] (* idx itm)) flattened-disk-map)))
-
-(defn frag [coll]
-  (let [is-number-vec? #(every? number? %)
-        is-dot-vec? #(every? #{\.} %)
-        fill-dots #(vec (concat % (repeat (- (count %2) (count %)) \.)))]
-    (reverse
-     (reduce
-      (fn [acc item]
-        (if (is-number-vec? item)
-          (let [target-index (first (keep-indexed #(when (and (is-dot-vec? %2) 
-                                                              (>= (count %2) (count item))) 
-                                                     %1) 
-                                                  acc))]
-            (if target-index
-              (assoc acc target-index (fill-dots item (nth acc target-index)))
-              (conj acc item)))
-          (conj acc item)))
-      []
-      (reverse coll)))))
   
 
 (defn -main []
