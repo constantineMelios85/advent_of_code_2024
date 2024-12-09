@@ -21,7 +21,7 @@
 (defn disk-map [seq]
   (let [initial-state {:disk-map [] :index 0 :id 0}
         final-state (reduce process-memory-size initial-state seq)]
-    (filter seq (:disk-map final-state))))
+    (filter (complement empty?) (:disk-map final-state))))
 
 (defn find-first-empty-space [disk-map]
   (.indexOf disk-map \.))
