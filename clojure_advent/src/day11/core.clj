@@ -1,42 +1,54 @@
 (ns day11.core
   (:require [file-reader :as fr]
-            [clojure.string :as str]))
+            [clojure.string :as str])
+  (:import (java.math BigInteger)))
 
-(def multiplier 2024)
+(def multiplier (BigInteger. "2024"))
 
 (defn parse-input [input]
-  (mapv #(Integer/parseInt %) (str/split input #" ")))
+  (frequencies (map #(BigInteger. %) (str/split input #" "))))
 
-(defn count-digits [number]
-  (count (str number)))
+(defn count-digits [^BigInteger number]
+  (count (.toString number)))
 
-(defn split-number [number]
-  (let [digits (str number)
-        half (quot (count digits) 2)]
-    [(Integer/parseInt (subs digits 0 half))
-     (Integer/parseInt (subs digits half))]))
+(defn split-number [^BigInteger number]
+  (let [str-num (.toString number)
+        half (quot (count str-num) 2)]
+    [(BigInteger. (subs str-num 0 half))
+     (BigInteger. (subs str-num half))]))
 
-(def apply-rule
-  (memoize
-   (fn [number]
-     (if (zero? number)
-       [1]
-       (if (even? (count-digits number))
-         (split-number number)
-         [(*' multiplier number)])))))
+(defn apply-rule [^BigInteger number count]
+  (cond
+    (.equals number BigInteger/ZERO) {BigInteger/ONE count}
+    (even? (count-digits number)) (let [[a b] (split-number number)]
+                                    (merge-with + {a count} {b count}))
+    :else {(.multiply number multiplier) count}))
 
-(def apply-rules-xf
-  (mapcat apply-rule))
+(defn apply-rules [number-freq]
+  (reduce-kv (fn [acc number count]
+               (merge-with + acc (apply-rule number count)))
+             {}
+             number-freq))
 
 (defn apply-rules-x-times [input x]
-  (reduce (fn [acc _] (into [] apply-rules-xf acc))
-          input
-          (range x)))
+  (loop [current input
+         iteration 0]
+    (if (= iteration x)
+      current
+      (recur (apply-rules current) (inc iteration)))))
 
-(defn -main
-  []
+(defn count-stones [input times]
+  (reduce + (vals (apply-rules-x-times input times))))
+
+(defn -main []
   (let [input (fr/read-lines "src/day11/input.txt")
-        int-input (parse-input (first input))]
-    (println (count (apply-rules-x-times int-input 25)))
-    (println (count (apply-rules-x-times int-input 75)))))
+        int-input (parse-input (first input))
+        start-time-25 (System/nanoTime)
+        result-25 (count-stones int-input 25)
+        end-time-25 (System/nanoTime)
+        start-time-75 (System/nanoTime)
+        result-75 (count-stones int-input 75)
+        end-time-75 (System/nanoTime)]
+    (println "Result for 25 times:" result-25 "Time taken (ns):" (- end-time-25 start-time-25))
+    (println "Result for 75 times:" result-75 "Time taken (ns):" (- end-time-75 start-time-75))))
 
